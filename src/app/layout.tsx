@@ -5,8 +5,8 @@ import '../styles/globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: '抖音博主平台',
-  description: '抖音博主介绍和资源分享平台',
+  title: '搞薯条Ai工作流',
+  description: 'AI工作流管理平台，提供优质的工作流资源和分享',
 };
 
 export default function RootLayout({
