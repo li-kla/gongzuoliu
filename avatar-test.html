@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>头像显示测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-case {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+        .user-info {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>头像显示测试</h1>
+    
+    <div class="test-case">
+        <h2>1. 清理缓存并重新登录</h2>
+        <p>请按照以下步骤操作：</p>
+        <ol>
+            <li>打开浏览器开发者工具（F12）</li>
+            <li>切换到「控制台」标签</li>
+            <li>复制粘贴并运行以下代码：</li>
+        </ol>
+        <pre><code>localStorage.removeItem('user'); localStorage.removeItem('token'); location.reload();</code></pre>
+        <p>然后重新登录系统</p>
+    </div>
+    
+    <div class="test-case">
+        <h2>2. 测试默认头像生成</h2>
+        <div class="user-info">
+            <h3>测试用户：admin</h3>
+            <img class="avatar" src="https://ui-avatars.com/api/?name=admin&background=random&color=fff" alt="admin">
+            <p>URL: https://ui-avatars.com/api/?name=admin&background=random&color=fff</p>
+        </div>
+        
+        <div class="user-info">
+            <h3>测试用户：user1</h3>
+            <img class="avatar" src="https://ui-avatars.com/api/?name=user1&background=random&color=fff" alt="user1">
+            <p>URL: https://ui-avatars.com/api/?name=user1&background=random&color=fff</p>
+        </div>
+    </div>
+    
+    <div class="test-case">
+        <h2>3. 测试用户信息解析</h2>
+        <button onclick="testUserInfo()">测试用户信息</button>
+        <div id="test-result"></div>
+    </div>
+    
+    <script>
+        function testUserInfo() {
+            const userStr = localStorage.getItem('user');
+            const resultDiv = document.getElementById('test-result');
+            
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    resultDiv.innerHTML = `
+                        <div class="user-info">
+                            <h3>用户信息：</h3>
+                            <p>用户名: ${user.username}</p>
+                            <p>邮箱: ${user.email}</p>
+                            <p>角色: ${user.role}</p>
+                            <p>头像: ${user.avatar || '空'}</p>
+                            <p>生成的头像URL: ${(user.avatar && user.avatar.trim()) ? user.avatar : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=random&color=fff`}</p>
+                            <img class="avatar" src="${(user.avatar && user.avatar.trim()) ? user.avatar : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.username)}&background=random&color=fff`}" alt="${user.username}">
+                        </div>
+                    `;
+                } catch (error) {
+                    resultDiv.innerHTML = '<p style="color: red;">解析用户信息失败: ' + error.message + '</p>';
+                }
+            } else {
+                resultDiv.innerHTML = '<p style="color: red;">localStorage中没有用户信息，请先登录</p>';
+            }
+        }
+        
+        // 页面加载时自动测试
+        window.onload = function() {
+            console.log('=== 头像显示问题诊断 ===');
+            console.log('localStorage用户信息:', localStorage.getItem('user'));
+        };
+    </script>
+</body>
+</html>

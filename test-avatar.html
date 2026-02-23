@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>头像测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-case {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>头像测试</h1>
+    
+    <div class="test-case">
+        <h2>1. 测试 ui-avatars.com API</h2>
+        <img class="avatar" src="https://ui-avatars.com/api/?name=Test&background=random&color=fff" alt="Test">
+        <img class="avatar" src="https://ui-avatars.com/api/?name=Admin&background=random&color=fff" alt="Admin">
+        <img class="avatar" src="https://ui-avatars.com/api/?name=User&background=random&color=fff" alt="User">
+    </div>
+    
+    <div class="test-case">
+        <h2>2. 测试 DiceBear API</h2>
+        <img class="avatar" src="https://api.dicebear.com/7.x/pixel-art/svg?seed=test123&backgroundColor=random&colors=random" alt="DiceBear Test">
+    </div>
+    
+    <div class="test-case">
+        <h2>3. 测试空头像处理</h2>
+        <p>以下是模拟空头像的情况，应该显示默认头像：</p>
+        <script>
+            const username = 'TestUser';
+            const emptyAvatar = '';
+            const avatarUrl = emptyAvatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=random&color=fff`;
+            document.write(`<img class="avatar" src="${avatarUrl}" alt="${username}">`);
+            document.write(`<p>生成的头像 URL: ${avatarUrl}</p>`);
+        </script>
+    </div>
+</body>
+</html>
